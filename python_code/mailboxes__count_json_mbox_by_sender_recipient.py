@@ -10,10 +10,11 @@ DB = sys.argv[1]
 server = couchdb.Server('http://localhost:5984')
 db = server[DB]
 
+
 def senderRecipientCountMapper(doc):
     if doc.get('From') and doc.get('To'):
         for recipient in doc['To']:
-            yield ([doc['From'], recipient], 1)
+            yield ([str(doc['From']).lower(), str(recipient).lower()], 1)
 
 
 def summingReducer(keys, values, rereduce):
